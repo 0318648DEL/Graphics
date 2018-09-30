@@ -23,7 +23,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="graphics drills.cpp">
+    <ClCompile Include="11.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="WHY.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
