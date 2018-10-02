@@ -13,7 +13,7 @@ void Timer(int value);
 
 struct number
 {
-
+	
 };
 int hour = 0;
 int minute = 0;
