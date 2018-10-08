@@ -474,6 +474,311 @@ GLvoid drawScene()
 
 		//가로 3개
 		break;
+	case 5:
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-160.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-110.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		//세로 4개
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 0.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, -79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//가로 3개
+		break;
+	case 6:
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-110.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		//세로 4개
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 0.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, -79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//가로 3개
+		break;
+	case 7:
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-160.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-160.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//세로 4개
+
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-135.0f, 0.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-135.0f, -79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		//가로 3개
+		break;
+	case 8:
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//세로 4개
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 0.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, -79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//가로 3개
+		break;
+	case 9:
+		/*glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-160.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 1.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();*/
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, -40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-270.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-220.0f, 40.0f, 0.0f);
+		glScalef(5.0f, 10.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//세로 4개
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 0.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, 79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4ub(160, 100, 0, 1);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-245.0f, -79.0f, 0.0f);
+		glScalef(10.0f, 5.0f, 5.0f);
+		glutSolidCube(5.0f);
+		glPopMatrix();
+
+		//가로 3개
+		break;
 	}
 	glPushMatrix();
 	glColor4ub(160, 100, 0, 1);
