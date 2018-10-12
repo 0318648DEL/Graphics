@@ -71,21 +71,21 @@ void DrawScene()
 	case 1:
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
+		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glutSolidSphere(50.0, 20, 20);
 		glPopMatrix();
 
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
+		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireSphere(50.0, 20, 20);
 		glPopMatrix();
 		break;
