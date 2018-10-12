@@ -18,13 +18,15 @@ struct cam
 	float rz;
 };
 
-int shape_option = 0;
+int shape_option = 1;
 int axis_x_rotation = 0;
 int axis_y_rotation = 0;
 int axis_z_rotation = 0;
 float angle_x = 0;
 float angle_y = 0;
 float angle_z = 0;
+float shape1_angle_y = 0;
+float shape2_angle_y = 0;
 
 void SetupRC();
 void DrawScene();
@@ -59,44 +61,68 @@ void SetupRC()
 
 void DrawScene()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
 	
+	switch (shape_option)
+	{
+	case 1:
+		glPushMatrix();
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-100.0f, 0.0f, 0.0f);
+		glutSolidSphere(50.0, 20, 20);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(100.0f, 0.0f, 0.0f);
+		glutWireSphere(50.0, 20, 20);
+		glPopMatrix();
+		break;
+	}
 
 	glPushMatrix();
 	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	glRotatef(angle_x, axis_x_rotation, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, axis_y_rotation, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, axis_z_rotation);
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
-	glVertex3f(-100.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(100.0f, 0.0f, 0.0f);
 	glEnd();
 	glPopMatrix();
 
 	glPushMatrix();
 	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	glRotatef(angle_x, axis_x_rotation, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, axis_y_rotation, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, axis_z_rotation);
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
-	glVertex3f(0.0f, -100.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 100.0f, 0.0f);
 	glEnd();
 	glPopMatrix();
 
 	glPushMatrix();
 	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	glRotatef(angle_x, axis_x_rotation, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, axis_y_rotation, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, axis_z_rotation);
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
-	glVertex3f(0.0f, 0.0f, -100.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
 	glPopMatrix();
@@ -112,27 +138,39 @@ void Reshape(int w, int h)
 	glLoadIdentity();
 
 	gluPerspective(60.0, WIDTH/HEIGHT, 1.0, 1000.0);
-	glTranslatef(0.0, 0.0, -500.0);
+	glTranslatef(0.0, 0.0, -300.0);
 }
 
 void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	case '1':
+		shape_option = 1;
+		break;
+	case '2':
+		shape_option = 2;
+		break;
+	case '3':
+		shape_option = 3;
+		break;
+	case '4':
+		shape_option = 4;
+		break;
 	case 'X':
-		axis_x_rotation = 1;
-		axis_y_rotation = 0;
-		axis_z_rotation = 0;
+		angle_x += 10.0f;
 		break;
 	case 'Y':
-		axis_x_rotation = 0;
-		axis_y_rotation = 1;
-		axis_z_rotation = 0;
+		angle_y += 10.0f;
 		break;
 	case 'Z':
-		axis_x_rotation = 0;
-		axis_y_rotation = 0;
-		axis_z_rotation = 1;
+		angle_z += 10.0f;
+		break;
+	case 'L':
+		shape1_angle_y += 10.0f;
+		break;
+	case 'K':
+		shape2_angle_y += 10.0f;
 		break;
 	}
 	glutPostRedisplay();
@@ -141,19 +179,6 @@ void Keyboard(unsigned char key, int x, int y)
 void TimerFunction(int value)
 {
 	glutPostRedisplay();
-	if (axis_x_rotation == 1)
-	{
-		angle_x += 10.0f;
-	}
 	
-	if (axis_y_rotation == 1)
-	{
-		angle_y += 10.0f;
-	}
-
-	if (axis_z_rotation == 1)
-	{
-		angle_z += 10.0f;
-	}
 	glutTimerFunc(100, TimerFunction, 1);
 }
