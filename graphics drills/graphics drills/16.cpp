@@ -186,24 +186,24 @@ void DrawScene()
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(100.0f, 0.0f, 0.0f);
 	glEnd();
-	glPopMatrix();
+	/*glPopMatrix();
 
-	glPushMatrix();
-	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glPushMatrix();*/
+	/*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
 	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 100.0f, 0.0f);
 	glEnd();
-	glPopMatrix();
+	//glPopMatrix();
 
-	glPushMatrix();
-	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	//glPushMatrix();
+	/*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
 	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
@@ -226,6 +226,8 @@ void Reshape(int w, int h)
 
 	gluPerspective(60.0, WIDTH/HEIGHT, 1.0, 1000.0);
 	glTranslatef(0.0, 0.0, -300.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Keyboard(unsigned char key, int x, int y)
