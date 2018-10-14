@@ -27,6 +27,8 @@ float angle_y = 0;
 float angle_z = 0;
 float shape1_angle_y = 0;
 float shape2_angle_y = 0;
+float shape1_angle_yy = 0;
+float shape2_angle_yy = 0;
 
 void SetupRC();
 void DrawScene();
@@ -65,14 +67,27 @@ void DrawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glColor4f(0.0f, 0.8f, 0.8f, 1.0f);
+	glBegin(GL_POLYGON);
+	glVertex3f(100.0f, -50.0f, 100.0f);
+	glVertex3f(100.0f, -50.0f, -100.0f);
+	glVertex3f(-100.0f, -50.0f, -100.0f);
+	glVertex3f(-100.0f, -50.0f, 100.0f);
+	glEnd();
+	glPopMatrix();
 	
 	switch (shape_option)
 	{
 	case 1:
 		glPushMatrix();
-		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
 		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
 		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
@@ -83,19 +98,89 @@ void DrawScene()
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
 		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
 		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireSphere(50.0, 20, 20);
 		glPopMatrix();
 		break;
+	case 2:
+		glPushMatrix();
+		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-100.0f, 0.0f, 0.0f);
+		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
+		glutSolidCube(50.0);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(100.0f, 0.0f, 0.0f);
+		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
+		glutWireCube(50.0);
+		glPopMatrix();
+		break;
+	case 3:
+		glPushMatrix();
+		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-100.0f, 0.0f, 0.0f);
+		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
+		glutSolidCone(50.0, 50.0,20,20);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(100.0f, 0.0f, 0.0f);
+		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
+		glutWireCone(50.0, 50.0, 20, 20);
+		glPopMatrix();
+		break;
+	case 4:
+		glPushMatrix();
+		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-100.0f, 0.0f, 0.0f);
+		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
+		glutSolidTeapot(50.0);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glTranslatef(100.0f, 0.0f, 0.0f);
+		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
+		glutWireTeapot(50.0);
+		glPopMatrix();
+		break;
 	}
 
 	glPushMatrix();
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -104,10 +189,10 @@ void DrawScene()
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -116,16 +201,18 @@ void DrawScene()
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 	glBegin(GL_LINES);
 	glPointSize(2.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
 	glPopMatrix();
+
+
 
 	glutSwapBuffers();
 }
@@ -169,10 +256,19 @@ void Keyboard(unsigned char key, int x, int y)
 	case 'L':
 		shape1_angle_y += 10.0f;
 		break;
-	case 'K':
+	case 'R':
 		shape2_angle_y += 10.0f;
 		break;
+	case 'O':
+		shape1_angle_yy += 10.0f;
+		shape2_angle_yy += 10.0f;
+		break;
+	case 'C':
+		shape_option++;
+		break;
 	}
+
+	shape_option %= 5;
 	glutPostRedisplay();
 }
 
