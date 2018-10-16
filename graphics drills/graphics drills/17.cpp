@@ -103,10 +103,10 @@ void DrawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	gluLookAt(camera_x, camera_y, camera_z, camera_x, camera_y-200, camera_z+300, 0.0, 0.0, 1.0);
 	glRotatef(camera_angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(camera_angle_y, 0.0f, 1.0f, 0.0f);
 	glRotatef(camera_angle_z, 0.0f, 0.0f, 1.0f);
-	gluLookAt(camera_x, camera_y, camera_z, camera_x, camera_y-200, camera_z+300, 0.0, 0.0, 1.0);
 
 	glPushMatrix();
 	glColor4ub(150, 100, 50, 200);
@@ -325,6 +325,9 @@ void Keyboard(unsigned char key, int x, int y)
 		camera_x = 0.0f;
 		camera_y = 200.0f;
 		camera_z = -300.0f;
+		camera_angle_x = 0.0f;
+		camera_angle_y = 0.0f;
+		camera_angle_z = 0.0f;
 		break;
 	}
 
