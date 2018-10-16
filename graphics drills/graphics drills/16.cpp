@@ -58,12 +58,14 @@ int main(int argc, char **argv)
 
 void SetupRC()
 {
-
+	glEnable(GL_DEPTH_TEST);  // 은면 제거
+	glFrontFace(GL_CCW);   // 앞면 설정  
+	//glEnable(GL_CULL_FACE);  // 내부는 잘라낸다  
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void DrawScene()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -78,17 +80,28 @@ void DrawScene()
 	glVertex3f(-100.0f, -50.0f, -100.0f);
 	glVertex3f(-100.0f, -50.0f, 100.0f);
 	glEnd();
-	glPopMatrix();
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	glBegin(GL_LINES);
+	glLineWidth(2.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(100.0f, 0.0f, 0.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 100.0f, 0.0f);
+	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 100.0f);
+	glEnd();
 	
 	switch (shape_option)
 	{
 	case 1:
 		glPushMatrix();
 		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
 		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glutSolidSphere(50.0, 20, 20);
@@ -96,10 +109,10 @@ void DrawScene()
 
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
 		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireSphere(50.0, 20, 20);
@@ -108,10 +121,10 @@ void DrawScene()
 	case 2:
 		glPushMatrix();
 		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
 		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glutSolidCube(50.0);
@@ -119,10 +132,10 @@ void DrawScene()
 
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
 		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireCube(50.0);
@@ -131,10 +144,10 @@ void DrawScene()
 	case 3:
 		glPushMatrix();
 		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
 		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glutSolidCone(50.0, 50.0,20,20);
@@ -142,10 +155,10 @@ void DrawScene()
 
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
 		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireCone(50.0, 50.0, 20, 20);
@@ -154,10 +167,10 @@ void DrawScene()
 	case 4:
 		glPushMatrix();
 		glColor4f(0.8f, 0.0f, 0.8f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape1_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(-100.0f, 0.0f, 0.0f);
 		glRotatef(shape1_angle_y, 0.0f, 1.0f, 0.0f);
 		glutSolidTeapot(50.0);
@@ -165,10 +178,10 @@ void DrawScene()
 
 		glPushMatrix();
 		glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
-		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(shape2_angle_yy, 0.0f, 1.0f, 0.0f);
-		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
 		glTranslatef(100.0f, 0.0f, 0.0f);
 		glRotatef(shape2_angle_y, 0.0f, 1.0f, 0.0f);
 		glutWireTeapot(50.0);
@@ -176,41 +189,25 @@ void DrawScene()
 		break;
 	}
 
-	glPushMatrix();
-	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	glBegin(GL_LINES);
-	glPointSize(2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(100.0f, 0.0f, 0.0f);
-	glEnd();
-	/*glPopMatrix();
-
-	glPushMatrix();*/
-	/*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
-	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	glBegin(GL_LINES);
-	glPointSize(2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 100.0f, 0.0f);
-	glEnd();
-	//glPopMatrix();
-
-	//glPushMatrix();
-	/*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	glBegin(GL_LINES);
-	glPointSize(2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
 	glPopMatrix();
+	//glPushMatrix();
+	//glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	///*glPopMatrix();
+
+	//glPushMatrix();*/
+	///*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
+	////glPopMatrix();
+
+	////glPushMatrix();
+	///*glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	//glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	//glRotatef(angle_z, 0.0f, 0.0f, 1.0f);*/
+	//glEnd();
+	//glPopMatrix();
 
 
 
@@ -245,6 +242,15 @@ void Keyboard(unsigned char key, int x, int y)
 		break;
 	case '4':
 		shape_option = 4;
+		break;
+	case 'x':
+		angle_x -= 10.0f;
+		break;
+	case 'y':
+		angle_y -= 10.0f;
+		break;
+	case 'z':
+		angle_z -= 10.0f;
 		break;
 	case 'X':
 		angle_x += 10.0f;
