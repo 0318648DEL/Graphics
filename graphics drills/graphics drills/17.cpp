@@ -286,22 +286,22 @@ void Keyboard(unsigned char key, int x, int y)
 			draw_mode = GLU_FILL;
 		break;
 	case 'w':
-		camera_y += 1.0f;
+		camera_y += 10.0f;
 		break;
 	case 'a':
-		camera_x += 1.0f;
+		camera_x += 10.0f;
 		break;
 	case 's':
-		camera_y -= 1.0f;
+		camera_y -= 10.0f;
 		break;
 	case 'd':
-		camera_x -= 1.0f;
+		camera_x -= 10.0f;
 		break;
 	case '+':
-		camera_z += 1.0f;
+		camera_z += 10.0f;
 		break;
 	case '-':
-		camera_z -= 1.0f;
+		camera_z -= 10.0f;
 		break;
 	case 'x':
 		camera_angle_x += 1.0f;
