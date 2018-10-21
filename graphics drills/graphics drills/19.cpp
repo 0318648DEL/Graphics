@@ -8,6 +8,11 @@
 #define WIDTH 800
 #define HEIGHT 600
 
+float sph_x = 0;
+float sph_z = 0;
+float sph_angle_x = 0;
+float sph_angle_y = 0;
+float sph_angle_z = 0;
 float angle_x = 0;
 float angle_y = 0;
 float angle_z = 0;
@@ -76,10 +81,25 @@ void DrawScene()
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
-
-
-
 	glPopMatrix();
+
+	glPushMatrix();
+	glColor4ub(200, 100, 50, 200);
+	gluQuadricDrawStyle(sph, GLU_LINE);
+	gluQuadricNormals(sph, GLU_SMOOTH);
+	gluQuadricOrientation(sph, GLU_OUTSIDE);
+	glTranslatef(sph_x, -30.0f, sph_z);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(sph_angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(sph_angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(sph_angle_z, 0.0f, 0.0f, 1.0f);
+	gluSphere(sph, 20, 20, 20);
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	glPopMatrix();
+
+
 	glutSwapBuffers();
 }
 
@@ -144,9 +164,13 @@ void Keyboard(unsigned char key, int x, int y)
 	case 'Z':
 		camera_angle_z -= 1.0f;
 		break;
-	case 'I':
+	case 'l':
+		sph_x += 10.0f;
+		sph_angle_x += 5.0f;
 		break;
 	case 'L':
+		sph_x -= 10.0f;
+		sph_angle_x -= 5.0f;
 		break;
 	case 'm':
 		break;
