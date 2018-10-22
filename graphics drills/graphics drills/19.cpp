@@ -165,20 +165,38 @@ void Keyboard(unsigned char key, int x, int y)
 		camera_angle_z -= 1.0f;
 		break;
 	case 'l':
-		sph_x += 10.0f;
+		if (sph_x < 100.0f)
+		{
+			sph_x += 10.0f;
+		}
 		sph_angle_x += 5.0f;
 		break;
 	case 'L':
+		if (sph_x > -100.0f)
+		{
 		sph_x -= 10.0f;
+		}
 		sph_angle_x -= 5.0f;
 		break;
 	case 'm':
+		sph_angle_y += 5.0f;
 		break;
 	case 'M':
+		sph_angle_y -= 5.0f;
 		break;
 	case 'n':
+		if (sph_z < 100.0f)
+		{
+			sph_z += 10.0f;
+		}
+		sph_angle_z += 5.0f;
 		break;
 	case 'N':
+		if (sph_z > -100.0f)
+		{
+			sph_z -= 10.0f;
+		}
+		sph_angle_z -= 5.0f;
 		break;
 	case 'i':
 		camera_x = 0.0f;
@@ -187,6 +205,11 @@ void Keyboard(unsigned char key, int x, int y)
 		camera_angle_x = 0.0f;
 		camera_angle_y = 0.0f;
 		camera_angle_z = 0.0f;
+		sph_x = 0;
+		sph_z = 0;
+		sph_angle_x = 0;
+		sph_angle_y = 0;
+		sph_angle_z = 0;
 		break;
 	}
 
