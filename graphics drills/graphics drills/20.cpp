@@ -17,6 +17,16 @@ float camera_z = -300.0f;
 double camera_angle_x = 0.0;
 double camera_angle_y = 0.0;
 double camera_angle_z = 0.0;
+float box_way = 5.0f;
+float arm1_way_x = 6.0f;
+float arm2_way_x = 7.0f;
+float arm1_way_y = 5.0f;
+float arm2_way_z = 8.0f;
+float box1_x = 0.0f;
+float arm1_x = 0.0f;
+float arm1_y = 0.0f;
+float arm2_x = 0.0f;
+float arm2_z = 0.0f;
 int shape_op = GLU_LINE;
 GLUquadricObj *box1;
 GLUquadricObj *box2;
@@ -108,8 +118,40 @@ void DrawScene()
 
 	glPushMatrix();
 	{
+		glTranslatef(box1_x, -30.0f, 0.0f);
+		glScalef(1.5f, 1.0f, 1.5f);
+		glutSolidCube(40);
+		glColor3ub(0, 0, 0);
+		glutWireCube(40);
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glTranslatef(box1_x, 0.0f, 0.0f);
+		glTranslatef(0.0f, 5.0f, 0.0f);
+		glRotatef(arm1_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(arm1_y, 0.0f, 1.0f, 0.0f);
+		glPushMatrix();
+		{
+			glTranslatef(0.0f, 20.0f, 0.0f);
+			glRotatef(arm2_x, 1.0f, 0.0f, 0.0f);
+			glRotatef(arm2_z, 0.0f, 0.0f, 1.0f);
+			glScalef(1.0f, 3.0f, 1.0f);
+			glColor3ub(250, 100, 100);
+			glutSolidCube(10);
+			glColor3ub(0, 0, 0);
+			glutWireCube(10);
+		}
+		glPopMatrix();
+		glScalef(1.0f, 2.0f, 1.0f);
+		glColor3ub(100, 250, 100);
+		glutSolidCube(20);
+		glColor3ub(0, 0, 0);
+		glutWireCube(20);
 
 	}
+	glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -170,6 +212,56 @@ void Keyboard(unsigned char key, int x, int y)
 void TimerFunction(int value)
 {
 	glutPostRedisplay();
+	if (box1_x > 100.0f)
+	{
+		box_way = -5.0f;
+	}
+	else if (box1_x < -100.0f)
+	{
+		box_way = 5.0f;
+	}
+
+	if (arm1_x > 80.0f)
+	{
+		arm1_way_x = -6.0f;
+	}
+	else if (arm1_x < -80.0f)
+	{
+		arm1_way_x = 6.0f;
+	}
+
+	if (arm1_y > 80.0f)
+	{
+		arm1_way_y = -5.0f;
+	}
+	else if (arm1_y < -80.0f)
+	{
+		arm1_way_y = 5.0f;
+	}
+
+	if (arm2_x > 80.0f)
+	{
+		arm2_way_x = -7.0f;
+	}
+	else if (arm2_x < -80.0f)
+	{
+		arm2_way_x = 7.0f;
+	}
+
+	if (arm2_z > 80.0f)
+	{
+		arm2_way_z = -8.0f;
+	}
+	else if (arm2_z < -80.0f)
+	{
+		arm2_way_z = 8.0f;
+	}
+
+	box1_x += box_way;
+	arm1_x += arm1_way_x;
+	arm1_y += arm1_way_y;
+	arm2_x += arm2_way_x;
+	arm2_z += arm2_way_z;
 
 	glutTimerFunc(50, TimerFunction, 1);
 }
