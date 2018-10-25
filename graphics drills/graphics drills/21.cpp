@@ -23,13 +23,15 @@ float arm1_x = 0.0f;
 float arm1_y = 0.0f;
 float arm2_x = 0.0f;
 float arm2_z = 0.0f;
-int shape_op = GLU_LINE;
+float tree_size = 1.0f;
+float size = 0.05f;
 
 void SetupRC();
 void DrawScene();
 void Reshape(int w, int h);
 void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
+
 
 int main(int argc, char **argv)
 {
@@ -43,29 +45,9 @@ int main(int argc, char **argv)
 	glutDisplayFunc(DrawScene);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
-	glutTimerFunc(100, TimerFunction, 1);
+	glutTimerFunc(30, TimerFunction, 1);
 
 	glutMainLoop();
-}
-
-void SetupRC()
-{
-	glEnable(GL_DEPTH_TEST);  // 은면 제거
-	glFrontFace(GL_CCW);   // 앞면 설정  
-	//glEnable(GL_CULL_FACE);  // 내부는 잘라낸다  
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
-
-void Reshape(int w, int h)
-{
-	glViewport(0, 0, w, h);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluPerspective(60.0, WIDTH / HEIGHT, 1.0, 1000.0);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
 void DrawScene()
@@ -80,28 +62,30 @@ void DrawScene()
 	glRotatef(camera_angle_z, 0.0f, 0.0f, 1.0f);
 
 	glPushMatrix();
-	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
-	glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
-	glColor4f(0.0f, 0.8f, 0.8f, 1.0f);
-	glBegin(GL_POLYGON);
-	glVertex3f(100.0f, -50.0f, 100.0f);
-	glVertex3f(100.0f, -50.0f, -100.0f);
-	glVertex3f(-100.0f, -50.0f, -100.0f);
-	glVertex3f(-100.0f, -50.0f, 100.0f);
-	glEnd();
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	glBegin(GL_LINES);
-	glLineWidth(2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(100.0f, 0.0f, 0.0f);
-	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 100.0f, 0.0f);
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
+	{
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+		glColor4f(0.0f, 0.8f, 0.8f, 1.0f);
+		glBegin(GL_POLYGON);
+		glVertex3f(100.0f, -50.0f, 100.0f);
+		glVertex3f(100.0f, -50.0f, -100.0f);
+		glVertex3f(-100.0f, -50.0f, -100.0f);
+		glVertex3f(-100.0f, -50.0f, 100.0f);
+		glEnd();
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		glBegin(GL_LINES);
+		glLineWidth(2.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(100.0f, 0.0f, 0.0f);
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 100.0f, 0.0f);
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, 100.0f);
+		glEnd();
+	}
 	glPopMatrix();
 
 	glPushMatrix();
@@ -126,7 +110,7 @@ void DrawScene()
 
 			glRotatef(arm2_z, 0.0f, 0.0f, 1.0f);
 			glRotatef(arm2_x, 1.0f, 0.0f, 0.0f);
-			glTranslatef(0.0f,10.0f, 0.0f);
+			glTranslatef(0.0f, 10.0f, 0.0f);
 			glScalef(1.0f, 3.0f, 1.0f);
 			glColor3ub(250, 100, 100);
 			glutSolidCube(10);
@@ -143,7 +127,59 @@ void DrawScene()
 	}
 	glPopMatrix();
 
+
+	/*glColor3ub(250, 250, 0);
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex3f(-50.0f, -50.0f, -100.0f);
+	glVertex3f(-100.0f, -50.0f, -100.0f);
+	glVertex3f(-100.0f, -50.0f, -50.0f);
+	glEnd();
+*/
+
+	glPushMatrix();
+	{
+		glColor3ub(250, 250, 0);
+		glBegin(GL_TRIANGLE_STRIP);
+		glVertex3f(-30.0f, -49.0f, -100.0f);
+		glVertex3f(-100.0f, -49.0f, -100.0f);
+		glVertex3f(-100.0f, -49.0f, -30.0f);
+		glEnd();
+		glTranslatef(-80.0f, -25.0f, -80.0f);
+		glPushMatrix();
+		{
+			glColor3ub(0, 200, 0);
+			glTranslatef(0.0f, 40.0f, 0.0f);
+			glScalef(tree_size, tree_size, tree_size);
+			glutSolidCube(40);
+		}
+		glPopMatrix();
+		glScalef(1.0f, 2.5f, 1.0f);
+		glColor3ub(50, 50, 50);
+		glutSolidCube(20);
+	}
+	glPopMatrix();
+
 	glutSwapBuffers();
+}
+
+void SetupRC()
+{
+	glEnable(GL_DEPTH_TEST);  // 은면 제거
+	glFrontFace(GL_CCW);   // 앞면 설정  
+	//glEnable(GL_CULL_FACE);  // 내부는 잘라낸다  
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void Reshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(60.0, WIDTH / HEIGHT, 1.0, 1000.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Keyboard(unsigned char key, int x, int y)
@@ -187,19 +223,19 @@ void Keyboard(unsigned char key, int x, int y)
 		camera_angle_z -= 1.0f;
 		break;
 	case 't':
-		if(arm1_x<90.0f)
+		if (arm1_x < 90.0f)
 			arm1_x += 6.0f;
 		break;
 	case 'g':
-		if(arm1_x>0.0f)
+		if (arm1_x > 0.0f)
 			arm1_x -= 6.0f;
 		break;
 	case 'f':
-		if(arm1_y<90.0f)
-			arm1_y += 7.0f;	
+		if (arm1_y < 90.0f)
+			arm1_y += 7.0f;
 		break;
 	case 'h':
-		if(arm1_y>0.0f)
+		if (arm1_y > 0.0f)
 			arm1_y -= 7.0f;
 		break;
 	case 'o':
@@ -243,10 +279,18 @@ void TimerFunction(int value)
 		box_way = 5.0f;
 	}
 
-	
+	if (tree_size > 2.0f)
+	{
+		size = -0.05f;
+	}
+	else if (tree_size < 1.0f)
+	{
+		size = 0.05f;
+	}
 
+	tree_size += size;
 	box1_x += box_way;
-	
 
-	glutTimerFunc(50, TimerFunction, 1);
+
+	glutTimerFunc(100, TimerFunction, 1);
 }
