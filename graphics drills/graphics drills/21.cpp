@@ -25,6 +25,8 @@ float arm2_x = 0.0f;
 float arm2_z = 0.0f;
 float tree_size = 1.0f;
 float size = 0.05f;
+float spin = 0.0f;
+float run = 0.0f;
 
 void SetupRC();
 void DrawScene();
@@ -159,6 +161,123 @@ void DrawScene()
 	}
 	glPopMatrix();
 
+	glPushMatrix();
+	{
+		glTranslatef(40.0f, -25.0f, 70.0f);
+		glPushMatrix();
+		{
+			glColor3ub(200, 200, 200);
+			glScalef(1.0f, 10.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+		glTranslatef(40.0f, 0.0f, 0.0f);
+		glPushMatrix();
+		{
+			glColor3ub(200, 200, 200);
+			glScalef(1.0f, 10.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+		glTranslatef(-20.0f, 20.0f, 0.0f);
+		glPushMatrix();
+		{
+			glColor3ub(200, 200, 200);
+			glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+			glScalef(1.0f, 10.0f, 1.0f);
+			glutSolidCube(4);
+		}
+		glPopMatrix();
+		glRotatef(spin, 1.0f, 0.0f, 0.0f);
+		glTranslatef(0.0f,-20.0f,0.0f);
+		glPushMatrix();
+		{
+			glColor3ub(250, 200, 200);
+			glScalef(2.0f, 2.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glColor3ub(250, 200, 200);
+			glTranslatef(7.5f, 10.0f, 0.0f);
+			glScalef(1.0f, 3.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glColor3ub(250, 200, 200);
+			glTranslatef(-7.5f, 10.0f, 0.0f);
+			glScalef(1.0f, 3.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glColor3ub(200, 200, 200);
+		glTranslatef(-70.0f, -40.0f, 70.0f);
+		glPushMatrix();
+		{
+			glTranslatef(-10.0f, 0.0f, 0.0f);
+			glScalef(1.0f, 1.0f, 10.0f);
+			glutSolidCube(5);
+
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef(10.0f, 0.0f, 0.0f);
+			glScalef(1.0f, 1.0f, 10.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef(10.0f, 10.0f, 20.0f);
+			glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+			glScalef(1.0f, 1.0f, 10.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef(-10.0f, 10.0f, 20.0f);
+			glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+			glScalef(1.0f, 1.0f, 10.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef(0.0f, 40.0f, 0.0f);
+			glScalef(2.0f, 3.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef()
+		}
+
+		glColor3ub(250, 250, 0);
+		glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+		glScalef(2.0f, 1.0f, 2.0f);
+		glRotatef(-run, 0.0f, 0.0f, 1.0f);
+		glutWireTorus(3.0f, 10.0f, 10, 10);
+	}
+	glPopMatrix();
+
 	glutSwapBuffers();
 }
 
@@ -290,7 +409,8 @@ void TimerFunction(int value)
 
 	tree_size += size;
 	box1_x += box_way;
-
+	spin += 10.0f;
+	run += 10.0f;
 
 	glutTimerFunc(100, TimerFunction, 1);
 }
