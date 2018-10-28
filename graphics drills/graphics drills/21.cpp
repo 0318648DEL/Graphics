@@ -27,6 +27,10 @@ float tree_size = 1.0f;
 float size = 0.05f;
 float spin = 0.0f;
 float run = 0.0f;
+float leg1 = 0.0f;
+float leg1_dir = 5.0f;
+float leg2 = 0.0f;
+float leg2_dir = -5.0f;
 
 void SetupRC();
 void DrawScene();
@@ -267,14 +271,45 @@ void DrawScene()
 
 		glPushMatrix();
 		{
-			glTranslatef()
+			glTranslatef(-2.5f, 40.0f, 0.0f);
+			glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+			glRotatef(leg1, 1.0f, 0.0f, 0.0f);
+			glTranslatef(0.0f, 15.0f, 0.0f);
+			glScalef(1.0f, 3.0f, 1.0f);
+			glutSolidCube(5);
 		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glTranslatef(2.5f, 40.0f, 0.0f);
+			glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+			glRotatef(leg2, 1.0f, 0.0f, 0.0f);
+			glTranslatef(0.0f, 15.0f, 0.0f);
+			glScalef(1.0f, 3.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
 
 		glColor3ub(250, 250, 0);
 		glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
 		glScalef(2.0f, 1.0f, 2.0f);
 		glRotatef(-run, 0.0f, 0.0f, 1.0f);
 		glutWireTorus(3.0f, 10.0f, 10, 10);
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glColor3ub(200, 200, 200);
+		glTranslatef(-70.0f, -40.0f, -70.0f);
+
+		glPushMatrix();
+		{
+
+		}
+		glPopMatrix();
+
 	}
 	glPopMatrix();
 
@@ -407,10 +442,29 @@ void TimerFunction(int value)
 		size = 0.05f;
 	}
 
+	if (leg1 > 30.0f)
+	{
+		leg1_dir = -5.0f;
+	}
+	else if (leg1 < -30.0f)
+	{
+		leg1_dir = 5.0f;
+	}
+
+	if (leg2 > 30.0f)
+	{
+		leg2_dir = -5.0f;
+	}
+	else if (leg2 < -30.0f)
+	{
+		leg2_dir = 5.0f;
+	}
+
 	tree_size += size;
 	box1_x += box_way;
 	spin += 10.0f;
 	run += 10.0f;
-
+	leg1 += leg1_dir;
+	leg2 += leg2_dir;
 	glutTimerFunc(100, TimerFunction, 1);
 }
