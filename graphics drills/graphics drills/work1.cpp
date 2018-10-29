@@ -369,7 +369,11 @@ void Reshape(int w, int h)
 
 void Cutting()
 {
-	cut_line
+	for (int i = 0; i < 1000; ++i)
+	{
+		float t = (float)(i / 1000);
+
+	}
 }
 
 void Mouse(int button, int state, int x, int y)
