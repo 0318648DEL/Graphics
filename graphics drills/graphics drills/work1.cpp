@@ -14,9 +14,10 @@ void DrawScene();
 void Reshape(int w, int h);
 void Mouse(int button, int state, int x, int y);
 void Motion(int x, int y);
-void Check(int x, int y);
+void Pick(int x, int y);
 void Cutting();
 void TimerFunction(int value);
+void Check(float x, float y);
 
 /*
 지금 필요한거 삼각형이랑 사각형
@@ -40,6 +41,16 @@ struct triangles
 	/*float z1;
 	float z2;
 	float z3;*/
+};
+
+struct cut_triangle
+{
+	float x1;
+	float x2;
+	float x3;
+	float y1;
+	float y2;
+	float y3;
 };
 
 struct square
@@ -67,15 +78,24 @@ struct lines
 	float y2;
 };
 
-triangles cut_tri[2];
+cut_triangle cut_tri[2];
 triangles up_tri[10];
 float grid_points_l[28][2];
 float grid_points_r[28][2];
-
+float cut_x1;
+float cut_y1;
+float cut_x2;
+float cut_y2;
 
 square sqr;
 lines cut_line;
 
+int cut = 0;
+float mouse_pos_x;
+float mouse_pos_y;
+int restart = 0;
+int first_in = 0;
+int picked = 0;
 bool left_button = false;
 int check = 0;
 
@@ -93,7 +113,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(Reshape);
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
-	glutPassiveMotionFunc(Check);
+	glutPassiveMotionFunc(Pick);
 	glutTimerFunc(100, TimerFunction, 1);
 
 	glutMainLoop();
@@ -116,16 +136,40 @@ void DrawScene()
 	}
 	glEnd();
 
-	glBegin(GL_POLYGON);
+	if (sqr.mode == 0 || sqr.mode == 1)
 	{
-		glColor3ub(255, 255, 255);
-		glVertex2f(sqr.x1, sqr.y1);
-		glVertex2f(sqr.x2, sqr.y2);
-		glVertex2f(sqr.x3, sqr.y3);
-		glVertex2f(sqr.x4, sqr.y4);
+		glBegin(GL_POLYGON);
+		{
+			glColor3ub(255, 255, 255);
+			glVertex2f(sqr.x1, sqr.y1);
+			glVertex2f(sqr.x2, sqr.y2);
+			glVertex2f(sqr.x3, sqr.y3);
+			glVertex2f(sqr.x4, sqr.y4);
+
+		}
+		glEnd();
 
 	}
-	glEnd();
+	else
+	{
+		glBegin(GL_POLYGON);
+		{
+			glColor3ub(255, 255, 255);
+			glVertex2f(cut_tri[0].x1, cut_tri[0].y1);
+			glVertex2f(cut_tri[0].x2, cut_tri[0].y2);
+			glVertex2f(cut_tri[0].x3, cut_tri[0].y3);
+		}
+		glEnd();
+
+		glBegin(GL_POLYGON);
+		{
+			glColor3ub(255, 255, 255);
+			glVertex2f(cut_tri[1].x1, cut_tri[1].y1);
+			glVertex2f(cut_tri[1].x2, cut_tri[1].y2);
+			glVertex2f(cut_tri[1].x3, cut_tri[1].y3);
+		}
+		glEnd();
+	}
 
 	{
 		glBegin(GL_LINE_LOOP);
@@ -369,34 +413,262 @@ void Reshape(int w, int h)
 
 void Cutting()
 {
-	for (int i = 0; i < 1000; ++i)
+	float t;
+	float x, y;
+	for (int i = 0; i <= 1000; ++i)
 	{
-		float t = (float)(i / 1000);
+		t = (float)i / 1000;
+		x = (1 - t)*cut_line.x1 + t * cut_line.x2;
+		y = (1 - t)*cut_line.y1 + t * cut_line.y2;
+		/*
+		처음에 들어가는 점 체크
+		나중에 나가는 점 체크
+		처음만 체크하고 그 뒤에는 그냥 나중에 나가는 점으로 치자
+		*/
+		Check(x, y);
+	}
+	printf("cut x1 : %f, cut y1 : %f, cut x2 : %f, cut y2 : %f\n", cut_x1, cut_y1, cut_x2, cut_y2);
+}
 
+void Check(float x, float y)
+{
+	if (sqr.mode == 0)
+	{
+		if (first_in == 0 && (x >= sqr.x1&&x <= sqr.x1 + 10) && (y <= sqr.y1&&y >= sqr.y1 - 10))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x2&&x <= sqr.x2 + 10) && (y <= sqr.y2 + 10 && y >= sqr.y2))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x3 - 10 && x <= sqr.x3) && (y <= sqr.y3 + 10 && y >= sqr.y3))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x4 - 10 && x <= sqr.x4) && (y <= sqr.y4 && y >= sqr.y4 - 10))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 1 && (x >= sqr.x3 - 10 && x <= sqr.x3) && (y <= sqr.y3 + 10 && y >= sqr.y3))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 2;
+
+			}
+		}
+		else if (first_in == 1 && (x >= sqr.x4 - 10 && x <= sqr.x4) && (y <= sqr.y4 && y >= sqr.y4 - 10))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 3;
+
+			}
+		}
+		else if (first_in == 1 && (x >= sqr.x1&&x <= sqr.x1 + 10) && (y <= sqr.y1&&y >= sqr.y1 - 10))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 2;
+
+			}
+
+		}
+		else if (first_in == 1 && (x >= sqr.x2&&x <= sqr.x2 + 10) && (y <= sqr.y2 + 10 && y >= sqr.y2))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 3;
+
+			}
+
+		}
+	}
+	else if (sqr.mode == 1)
+	{
+		if (first_in == 0 && (x >= sqr.x1 - 10 && x <= sqr.x1 + 10) && (y <= sqr.y1 && y >= sqr.y1 - 10))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x2 && x <= sqr.x2 + 10) && (y <= sqr.y2 + 10 && y >= sqr.y2 - 10))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x3 - 10 && x <= sqr.x3 + 10) && (y <= sqr.y3 + 10 && y >= sqr.y3))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 0 && (x >= sqr.x4 - 10&& x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
+		{
+			cut_x1 = x;
+			cut_y1 = y;
+			first_in = 1;
+		}
+		else if (first_in == 1 && (x >= sqr.x1 - 10 && x <= sqr.x1 + 10) && (y <= sqr.y1 && y >= sqr.y1 - 10))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 4;
+
+			}
+		}
+		else if (first_in == 1 && (x >= sqr.x2 && x <= sqr.x2 + 10) && (y <= sqr.y2 + 10 && y >= sqr.y2 - 10))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 5;
+
+			}
+		}
+		else if (first_in == 1 && (x >= sqr.x3 - 10 && x <= sqr.x3 + 10) && (y <= sqr.y3 + 10 && y >= sqr.y3))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 4;
+
+			}
+		}
+		else if (first_in == 1 && (x >= sqr.x4-10 && x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
+		{
+			cut_x2 = x;
+			cut_y2 = y;
+			if (cut_x2 != 0 && cut_y2 != 0)
+			{
+				sqr.mode = 5;
+
+			}
+		}
+	}
+	else if (sqr.mode == 2)
+	{
+		cut_tri[0].x1 = sqr.x1 - 20;
+		cut_tri[0].x2 = sqr.x2 - 20;
+		cut_tri[0].x3 = sqr.x3 - 20;
+		cut_tri[0].y1 = sqr.y1;
+		cut_tri[0].y2 = sqr.y2;
+		cut_tri[0].y3 = sqr.y3;
+		cut_tri[1].x1 = sqr.x1 + 20;
+		cut_tri[1].x2 = sqr.x3 + 20;
+		cut_tri[1].x3 = sqr.x4 + 20;
+		cut_tri[1].y1 = sqr.y1;
+		cut_tri[1].y2 = sqr.y3;
+		cut_tri[1].y3 = sqr.y4;
+	}
+	else if (sqr.mode == 3)
+	{
+		cut_tri[0].x1 = sqr.x1 - 20;
+		cut_tri[0].x2 = sqr.x2 - 20;
+		cut_tri[0].x3 = sqr.x4 - 20;
+		cut_tri[0].y1 = sqr.y1;
+		cut_tri[0].y2 = sqr.y2;
+		cut_tri[0].y3 = sqr.y4;
+		cut_tri[1].x1 = sqr.x2 + 20;
+		cut_tri[1].x2 = sqr.x3 + 20;
+		cut_tri[1].x3 = sqr.x4 + 20;
+		cut_tri[1].y1 = sqr.y2;
+		cut_tri[1].y2 = sqr.y3;
+		cut_tri[1].y3 = sqr.y4;
+	}
+	else if (sqr.mode == 4)
+	{
+		cut_tri[0].x1 = sqr.x1 - 20;
+		cut_tri[0].x2 = sqr.x2 - 20;
+		cut_tri[0].x3 = sqr.x3 - 20;
+		cut_tri[0].y1 = sqr.y1;
+		cut_tri[0].y2 = sqr.y2;
+		cut_tri[0].y3 = sqr.y3;
+		cut_tri[1].x1 = sqr.x3 + 20;
+		cut_tri[1].x2 = sqr.x4 + 20;
+		cut_tri[1].x3 = sqr.x1 + 20;
+		cut_tri[1].y1 = sqr.y3;
+		cut_tri[1].y2 = sqr.y4;
+		cut_tri[1].y3 = sqr.y1;
+	}
+	else if (sqr.mode == 5)
+	{
+		cut_tri[0].x1 = sqr.x1;
+		cut_tri[0].x2 = sqr.x2;
+		cut_tri[0].x3 = sqr.x4;
+		cut_tri[0].y1 = sqr.y1 + 20;
+		cut_tri[0].y2 = sqr.y2 + 20;
+		cut_tri[0].y3 = sqr.y4 + 20;
+		cut_tri[1].x1 = sqr.x2;
+		cut_tri[1].x2 = sqr.x3;
+		cut_tri[1].x3 = sqr.x4;
+		cut_tri[1].y1 = sqr.y2 - 20;
+		cut_tri[1].y2 = sqr.y3 - 20;
+		cut_tri[1].y3 = sqr.y4 - 20;
 	}
 }
 
 void Mouse(int button, int state, int x, int y)
 {
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	if (!picked)
 	{
-		cut_line.x1 = x - (WIDTH / 2);
-		cut_line.y1 = -(y - (HEIGHT / 2));
-		cut_line.x2 = x - (WIDTH / 2);
-		cut_line.y2 = -(y - (HEIGHT / 2));
-		printf("x1 : %f  y1 : %f", cut_line.x1, cut_line.y1);
-		left_button = true;
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			cut_line.x1 = x - (WIDTH / 2);
+			cut_line.y1 = -(y - (HEIGHT / 2));
+			cut_line.x2 = x - (WIDTH / 2);
+			cut_line.y2 = -(y - (HEIGHT / 2));
+			printf("x1 : %f  y1 : %f", cut_line.x1, cut_line.y1);
+			left_button = true;
+		}
+		else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+		{
+			//자르는 함수 넣기
+			switch (sqr.mode)
+			{
+			case 0:
+				Cutting();
+				break;
+			case 1:
+				Cutting();
+				break;
+			}
+			first_in = 0;
+			cut_line.x1 = 0;
+			cut_line.y1 = 0;
+			cut_line.x2 = 0;
+			cut_line.y2 = 0;
+			left_button = false;
+			printf("x2 : %f  y2 : %f", cut_line.x2, cut_line.y2);
+			printf("\n");
+
+		}
+
 	}
-	else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	else
 	{
-		//자르는 함수 넣기
-		cut_line.x1 = 0;
-		cut_line.y1 = 0;
-		cut_line.x2 = 0;
-		cut_line.y2 = 0;
-		left_button = false;
-		printf("x2 : %f  y2 : %f", cut_line.x2, cut_line.y2);
-		printf("\n");
 
 	}
 	glutPostRedisplay();
@@ -415,14 +687,19 @@ void Motion(int x, int y)
 
 }
 
-void Check(int x, int y)
+void Pick(int x, int y)
 {
-
+	
+	mouse_pos_x = x - (WIDTH / 2);
+	mouse_pos_y = -(y - (HEIGHT / 2));
+	printf("x : %f, y : %f\n", mouse_pos_x, mouse_pos_y);
 }
 
 void TimerFunction(int value)
 {
-	if (sqr.y3 > HEIGHT / 2)
+
+
+	if (restart)
 	{
 		sqr.mode = rand() % 2;
 		if (sqr.mode == 0)
@@ -447,13 +724,87 @@ void TimerFunction(int value)
 			sqr.y3 = -350.0f;
 			sqr.y4 = -325.0f;
 		}
+		restart = 0;
 	}
+	switch (sqr.mode)
+	{
+	case 0:
+		sqr.y1 += 5.0f;
+		sqr.y2 += 5.0f;
+		sqr.y3 += 5.0f;
+		sqr.y4 += 5.0f;
+		if (sqr.y3 > HEIGHT / 2)
+		{
+			restart = 1;
+		}
+		break;
+	case 1:
+		sqr.y1 += 5.0f;
+		sqr.y2 += 5.0f;
+		sqr.y3 += 5.0f;
+		sqr.y4 += 5.0f;
+		if (sqr.y3 > HEIGHT / 2)
+		{
+			restart = 1;
+		}
+		break;
+	case 2:
+		cut_tri[0].y1 -= 5;
+		cut_tri[0].y2 -= 5;
+		cut_tri[0].y3 -= 5;
+		cut_tri[1].y1 -= 5;
+		cut_tri[1].y2 -= 5;
+		cut_tri[1].y3 -= 5;
+		if (cut_tri[0].y2 <= -300 || cut_tri[1].y2 <= -300)
+		{
+			restart = 1;
+		}
+		break;
+	case 3:
+		cut_tri[0].y1 -= 5;
+		cut_tri[0].y2 -= 5;
+		cut_tri[0].y3 -= 5;
+		cut_tri[1].y1 -= 5;
+		cut_tri[1].y2 -= 5;
+		cut_tri[1].y3 -= 5;
+		if (cut_tri[0].y2 <= -300 || cut_tri[1].y2 <= -300)
+		{
+			restart = 1;
+		}
+		break;
+	case 4:
+		cut_tri[0].y1 -= 5;
+		cut_tri[0].y2 -= 5;
+		cut_tri[0].y3 -= 5;
+		cut_tri[1].y1 -= 5;
+		cut_tri[1].y2 -= 5;
+		cut_tri[1].y3 -= 5;
+		if (cut_tri[0].y2 <= -300 || cut_tri[1].y2 <= -300)
+		{
+			restart = 1;
+		}
+		break;
+	case 5:
+		cut_tri[0].y1 -= 5;
+		cut_tri[0].y2 -= 5;
+		cut_tri[0].y3 -= 5;
+		cut_tri[1].y1 -= 5;
+		cut_tri[1].y2 -= 5;
+		cut_tri[1].y3 -= 5;
+		if (cut_tri[0].y2 <= -300 || cut_tri[1].y2 <= -300)
+		{
+			restart = 1;
+		}
+		break;
+
+	}
+
 	for (int x = 0; x < 10; ++x)
 	{
 		if (up_tri[x].x > 420)
 		{
 			up_tri[x].x = -380;
-			up_tri[x].angle = rand()%200;
+			up_tri[x].angle = rand() % 200;
 		}
 		else
 		{
@@ -462,10 +813,6 @@ void TimerFunction(int value)
 
 		}
 	}
-	sqr.y1 += 5.0f;
-	sqr.y2 += 5.0f;
-	sqr.y3 += 5.0f;
-	sqr.y4 += 5.0f;
 	glutPostRedisplay();
 	glutTimerFunc(100, TimerFunction, 1);
 }
