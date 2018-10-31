@@ -95,7 +95,8 @@ float mouse_pos_x;
 float mouse_pos_y;
 int restart = 0;
 int first_in = 0;
-int picked = 0;
+int picked_l = 0;
+int picked_r = 0;
 bool left_button = false;
 int check = 0;
 
@@ -521,7 +522,7 @@ void Check(float x, float y)
 			cut_y1 = y;
 			first_in = 1;
 		}
-		else if (first_in == 0 && (x >= sqr.x4 - 10&& x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
+		else if (first_in == 0 && (x >= sqr.x4 - 10 && x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
 		{
 			cut_x1 = x;
 			cut_y1 = y;
@@ -557,7 +558,7 @@ void Check(float x, float y)
 
 			}
 		}
-		else if (first_in == 1 && (x >= sqr.x4-10 && x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
+		else if (first_in == 1 && (x >= sqr.x4 - 10 && x <= sqr.x4) && (y <= sqr.y4 + 10 && y >= sqr.y4 - 10))
 		{
 			cut_x2 = x;
 			cut_y2 = y;
@@ -632,7 +633,7 @@ void Check(float x, float y)
 
 void Mouse(int button, int state, int x, int y)
 {
-	if (!picked)
+	if (!picked_l && !picked_r)
 	{
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
@@ -689,9 +690,43 @@ void Motion(int x, int y)
 
 void Pick(int x, int y)
 {
-	
+
 	mouse_pos_x = x - (WIDTH / 2);
 	mouse_pos_y = -(y - (HEIGHT / 2));
+	switch (sqr.mode)
+	{
+	case 2:
+		if (mouse_pos_x >= cut_tri[0].x1&&mouse_pos_x <= (cut_tri[0].x3 / 2) && mouse_pos_y <= cut_tri[0].y1-20 && mouse_pos_y >= cut_tri[0].y3)
+		{
+			picked_l = 1;
+			printf("哭率\n");
+
+		}
+		else if (mouse_pos_x >= cut_tri[1].x3/2&&mouse_pos_x <= (cut_tri[1].x2) && mouse_pos_y <= cut_tri[1].y3 && mouse_pos_y >= cut_tri[1].y2-20)
+		{
+			picked_r = 1;
+			printf("坷弗率\n");
+
+		}
+		break;
+	case 3:
+		if (mouse_pos_x >= cut_tri[0].x1&&mouse_pos_x <= (cut_tri[0].x3 / 2) && mouse_pos_y <= cut_tri[0].y1 && mouse_pos_y >= cut_tri[0].y3-20)
+		{
+			picked_l = 1;
+			printf("哭率\n");
+		}
+		else if (mouse_pos_x <= cut_tri[1].x2&&mouse_pos_x >= (cut_tri[1].x3 / 2) && mouse_pos_y >= cut_tri[1].y2 && mouse_pos_y <= cut_tri[1].y3-20)
+		{
+			picked_r = 1;
+			printf("坷弗率\n");
+		}
+		break;
+	default:
+		picked_l = 0;
+		picked_r = 0;
+		break;
+	}
+	
 	printf("x : %f, y : %f\n", mouse_pos_x, mouse_pos_y);
 }
 
@@ -724,6 +759,8 @@ void TimerFunction(int value)
 			sqr.y3 = -350.0f;
 			sqr.y4 = -325.0f;
 		}
+		picked_l = 0;
+		picked_r = 0;
 		restart = 0;
 	}
 	switch (sqr.mode)

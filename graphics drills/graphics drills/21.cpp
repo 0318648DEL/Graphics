@@ -8,6 +8,11 @@
 #define WIDTH 800
 #define HEIGHT 600
 
+float sph_x = 0;
+float sph_z = 0;
+float sph_angle_x = 0;
+float sph_angle_y = 0;
+float sph_angle_z = 0;
 float angle_x = 0;
 float angle_y = 0;
 float angle_z = 0;
@@ -34,6 +39,8 @@ float leg2_dir = -5.0f;
 float babel1 = 0.0f;
 float babel2 = 0.0f;
 float m = 0.0f;
+float turning = 0.0f;
+GLUquadricObj *sph;
 
 void SetupRC();
 void DrawScene();
@@ -101,37 +108,37 @@ void DrawScene()
 	{
 		glTranslatef(box1_x, -30.0f, 0.0f);
 		glScalef(1.5f, 1.0f, 1.5f);
-		glutSolidCube(40);
+		glutSolidCube(20);
 		glColor3ub(0, 0, 0);
-		glutWireCube(40);
+		glutWireCube(20);
 	}
 	glPopMatrix();
 
 	glPushMatrix();
 	{
 		glTranslatef(box1_x, 0.0f, 0.0f);
+		glTranslatef(0.0f, -15.0f, 0.0f);
 		glRotatef(arm1_y, 0.0f, 1.0f, 0.0f);
 		glRotatef(arm1_x, 1.0f, 0.0f, 0.0f);
-		glTranslatef(0.0f, 10.0f, 0.0f);
 		glPushMatrix();
 		{
-			glTranslatef(0.0f, 20.0f, 0.0f);
+			glTranslatef(0.0f, 5.0f, 0.0f);
 
 			glRotatef(arm2_z, 0.0f, 0.0f, 1.0f);
 			glRotatef(arm2_x, 1.0f, 0.0f, 0.0f);
 			glTranslatef(0.0f, 10.0f, 0.0f);
 			glScalef(1.0f, 3.0f, 1.0f);
 			glColor3ub(250, 100, 100);
-			glutSolidCube(10);
+			glutSolidCube(5);
 			glColor3ub(0, 0, 0);
-			glutWireCube(10);
+			glutWireCube(5);
 		}
 		glPopMatrix();
 		glScalef(1.0f, 2.0f, 1.0f);
 		glColor3ub(100, 250, 100);
-		glutSolidCube(20);
+		glutSolidCube(10);
 		glColor3ub(0, 0, 0);
-		glutWireCube(20);
+		glutWireCube(10);
 
 	}
 	glPopMatrix();
@@ -143,7 +150,7 @@ void DrawScene()
 	glVertex3f(-100.0f, -50.0f, -100.0f);
 	glVertex3f(-100.0f, -50.0f, -50.0f);
 	glEnd();
-*/
+	*/
 
 	glPushMatrix();
 	{
@@ -159,7 +166,7 @@ void DrawScene()
 			glColor3ub(0, 200, 0);
 			glTranslatef(0.0f, 40.0f, 0.0f);
 			glScalef(tree_size, tree_size, tree_size);
-			glutSolidCube(40);
+			glutWireSphere(20,10,10);
 		}
 		glPopMatrix();
 		glScalef(1.0f, 2.5f, 1.0f);
@@ -196,7 +203,7 @@ void DrawScene()
 		}
 		glPopMatrix();
 		glRotatef(spin, 1.0f, 0.0f, 0.0f);
-		glTranslatef(0.0f,-20.0f,0.0f);
+		glTranslatef(0.0f, -20.0f, 0.0f);
 		glPushMatrix();
 		{
 			glColor3ub(250, 200, 200);
@@ -349,6 +356,100 @@ void DrawScene()
 	}
 	glPopMatrix();
 
+	glPushMatrix();
+	{
+		glTranslatef(0.0f, 80.0f, 0.0f);
+		glRotatef(turning, 0.0f, 1.0f, 0.0f);
+		glTranslatef(-50.0f, 0.0f, 0.0f);
+		glPushMatrix();
+		{
+			glColor3ub(100, 100, 100);
+			glScalef(2.0f, 3.0f, 8.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+		glPushMatrix();
+		{
+			glColor3ub(160, 100, 230);
+			glTranslatef(0.0f, 0.0f, -15.0f);
+			glScalef(4.0f, 1.0f, 1.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+		glPushMatrix();
+		{
+			glColor3ub(160, 160, 230);
+			glTranslatef(10.0f, 0.0f, -15.0f);
+			glScalef(0.4f, 2.0f, 4.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+		glPushMatrix();
+		{
+			glColor3ub(160, 160, 230);
+			glTranslatef(-10.0f, 0.0f, -15.0f);
+			glScalef(0.4f, 2.0f, 4.0f);
+			glutSolidCube(5);
+		}
+		glPopMatrix();
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glTranslatef(0.0f, 80.0f, 0.0f);
+
+
+		glPushMatrix();
+		{
+			glRotatef(turning - 40.0f, 0.0f, 1.0f, 0.0f);
+			glTranslatef(-50.0f, 0.0f, 0.0f);
+			glColor3ub(150, 150, 150);
+			glScalef(2.0f, 2.0f, 2.0f);
+			glutSolidCube(10);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glRotatef(turning - 60.0f, 0.0f, 1.0f, 0.0f);
+			glTranslatef(-50.0f, 0.0f, 0.0f);
+			glColor3ub(150, 150, 150);
+			glScalef(1.5f, 1.5f, 1.5f);
+			glutSolidCube(10);
+		}
+		glPopMatrix();
+
+		glPushMatrix();
+		{
+			glRotatef(turning - 80.0f, 0.0f, 1.0f, 0.0f);
+			glTranslatef(-50.0f, 0.0f, 0.0f);
+			glColor3ub(150, 150, 150);
+			glScalef(1.0f, 1.0f, 1.0f);
+			glutSolidCube(10);
+		}
+		glPopMatrix();
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glColor4ub(200, 100, 50, 200);
+		gluQuadricDrawStyle(sph, GLU_LINE);
+		gluQuadricNormals(sph, GLU_SMOOTH);
+		gluQuadricOrientation(sph, GLU_OUTSIDE);
+		glTranslatef(sph_x, -30.0f, sph_z);
+		glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+		glRotatef(sph_angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(sph_angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(sph_angle_z, 0.0f, 0.0f, 1.0f);
+		gluSphere(sph, 20, 20, 20);
+		glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+		glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+		glRotatef(angle_z, 0.0f, 0.0f, 1.0f);
+	}
+	glPopMatrix();
+
 	glutSwapBuffers();
 }
 
@@ -358,6 +459,8 @@ void SetupRC()
 	glFrontFace(GL_CCW);   // 앞면 설정  
 	//glEnable(GL_CULL_FACE);  // 내부는 잘라낸다  
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	sph = gluNewQuadric();
+
 }
 
 void Reshape(int w, int h)
@@ -444,6 +547,72 @@ void Keyboard(unsigned char key, int x, int y)
 		if (arm2_z < 90.0f)
 			arm2_z += 5.0f;
 		break;
+	case 'b':
+		if (sph_x < 100.0f&&sph_z<50.0f&&sph_z>-50.0f)
+		{
+			sph_x += 10.0f;
+		}
+		else if (sph_x < 30.0f&&sph_z<-50.0f&&sph_z>-100.0f)
+		{
+			sph_x += 10.0f;
+		}
+		else if (sph_x < 30.0f&&sph_z<100.0f&&sph_z>50.0f)
+		{
+			sph_x += 10.0f;
+		}
+		sph_angle_x += 5.0f;
+		break;
+	case 'B':
+		if (sph_x > -100.0f&&sph_z<50.0f&&sph_z>-50.0f)
+		{
+			sph_x -= 10.0f;
+		}
+		else if (sph_x > -30.0f&&sph_z<-50.0f&&sph_z>-100.0f)
+		{
+			sph_x -= 10.0f;
+		}
+		else if (sph_x > -30.0f&&sph_z<100.0f&&sph_z>-50.0f)
+		{
+			sph_x -= 10.0f;
+		}
+		sph_angle_x -= 5.0f;
+		break;
+	case 'm':
+		sph_angle_y += 5.0f;
+		break;
+	case 'M':
+		sph_angle_y -= 5.0f;
+		break;
+	case 'n':
+		if (sph_z < 100.0f&&sph_x<50.0f&&sph_x>-50.0f)
+		{
+			sph_z += 10.0f;
+		}
+		else if (sph_z < 30.0f&&sph_x<-50.0f&&sph_x>-100.0f)
+		{
+			sph_z += 10.0f;
+		}
+		else if (sph_z < 30.0f&&sph_x<100.0f&&sph_x>50.0f)
+		{
+			sph_z += 10.0f;
+		}
+		sph_angle_z += 5.0f;
+		break;
+	case 'N':
+		if (sph_z > -100.0f&&sph_x<50.0f&&sph_x>-50.0f)
+		{
+			sph_z -= 10.0f;
+		}
+		else if (sph_z > -30.0f&&sph_x<-50.0f&&sph_x>-100.0f)
+		{
+			sph_z -= 10.0f;
+		}
+		else if (sph_z > -30.0f&&sph_x<100.0f&&sph_x>50.0f)
+		{
+			sph_z -= 10.0f;
+		}
+		sph_angle_z -= 5.0f;
+		break;
 	case 'i':
 		camera_x = 0.0f;
 		camera_y = 200.0f;
@@ -460,7 +629,11 @@ void Keyboard(unsigned char key, int x, int y)
 void TimerFunction(int value)
 {
 	glutPostRedisplay();
-	if (box1_x > 100.0f)
+	if (box1_x - 30 <= sph_x && box1_x + 30 >= sph_x && (sph_z >= -10 && sph_z <= 10))
+	{
+		box_way *=-1;
+	}
+	else if (box1_x > 100.0f)
 	{
 		box_way = -5.0f;
 	}
@@ -513,5 +686,6 @@ void TimerFunction(int value)
 	leg2 += leg2_dir;
 	babel1 += m;
 	babel2 += m;
+	turning += 10.0f;
 	glutTimerFunc(100, TimerFunction, 1);
 }
