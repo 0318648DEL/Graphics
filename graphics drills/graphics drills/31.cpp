@@ -10,9 +10,12 @@ GLUquadricObj *sph;
 GLUquadricObj *light1;
 GLUquadricObj *light2;
 
+float Diffuse = 1.0f;
+float Specular = 1.0f;
+
 GLfloat AmbientLight_01[] = { 1.0f,1.0f,1.0f,1.0f };
-GLfloat DiffuseLight_01[] = { 1.0f,1.0f,1.0f,1.0f };
-GLfloat SpecularLight_01[] = { 1.0f,1.0f,1.0f,1.0f };
+GLfloat DiffuseLight_01[] = { Diffuse,Diffuse,Diffuse, 1.0f};
+GLfloat SpecularLight_01[] = { Specular,Specular,Specular,1.0f };
 GLfloat LightPos_01[] = { 200.0,200.0,0.0,1.0 };
 GLfloat AmbientLight_02[] = { 0.0f,0.0f,1.0f,1.0f };
 GLfloat DiffuseLight_02[] = { 0.0f,0.0f,1.0f,1.0f };
@@ -61,12 +64,10 @@ void SetupRC()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight_01);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight_01);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight_01);
-	glLightfv(GL_LIGHT0, GL_POSITION, LightPos_01);
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, AmbientLight_02);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight_02);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, SpecularLight_02);
-	glLightfv(GL_LIGHT1, GL_POSITION, LightPos_02);
 
 	glEnable(GL_DEPTH_TEST);  // 은면 제거
 	glFrontFace(GL_CCW);   // 앞면 설정  
@@ -82,6 +83,14 @@ void DrawScene()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(0.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight_01);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight_01);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight_01);
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, AmbientLight_02);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, DiffuseLight_02);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, SpecularLight_02);
 
 
 	glPushMatrix();
@@ -181,6 +190,42 @@ void Keyboard(unsigned char key, int x, int y)
 		break;
 	case 'A':
 		LIght_switch_auto = 0;
+		break;
+	case 'd':
+		if (Diffuse > 0.0f)
+		{
+			Diffuse -= 0.05f;
+			DiffuseLight_01[0] = Diffuse;
+			DiffuseLight_01[1] = Diffuse;
+			DiffuseLight_01[2] = Diffuse;
+		}
+		break;
+	case 'D':
+		if (Diffuse < 1.0f)
+		{
+			Diffuse += 0.05f;
+			DiffuseLight_01[0] = Diffuse;
+			DiffuseLight_01[1] = Diffuse;
+			DiffuseLight_01[2] = Diffuse;
+		}
+		break;
+	case 's':
+		if (Specular > 0.0f)
+		{
+			Specular-=0.05f;
+			SpecularLight_01[0] = Specular;
+			SpecularLight_01[1] = Specular;
+			SpecularLight_01[2] = Specular;
+		}
+		break;
+	case 'S':
+		if (Specular < 1.0f)
+		{
+			Specular+=0.05f;
+			SpecularLight_01[0] = Specular;
+			SpecularLight_01[1] = Specular;
+			SpecularLight_01[2] = Specular;
+		}
 		break;
 	}
 
