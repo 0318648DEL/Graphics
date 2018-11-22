@@ -95,7 +95,7 @@ void DrawScene()
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 		glMateriali(GL_FRONT, GL_SHININESS, 10);
 		glEnable(GL_AUTO_NORMAL);
-		glColor3f(0.5f, 0.5f, 0.0f);
+		glColor3f(0.5f, 0.5f, 0.5f);
 		gluCylinder(light1, 50.0, 0.0, 50.0, 20, 8);
 	}
 	glPopMatrix();
@@ -111,7 +111,7 @@ void DrawScene()
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 		glMateriali(GL_FRONT, GL_SHININESS, 10);
 		glEnable(GL_AUTO_NORMAL);
-		glColor3f(0.5f, 0.0f, 0.0f);
+		glColor3f(0.5f, 0.5f, 0.5f);
 		gluCylinder(light2, 50.0, 0.0, 50.0, 20, 8);
 	}
 	glPopMatrix();
